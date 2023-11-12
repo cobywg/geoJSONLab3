@@ -1,0 +1,71 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Magnolia"
+        },
+        "geometry": {
+          "coordinates": [
+            -122.40107503985493,
+            47.646938660324906
+          ],
+          "type": "Pike Place"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "UW"
+        },
+        "geometry": {
+          "coordinates": [
+            -122.34200056118661,
+            47.60914935664337
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Nathan Hale"
+        },
+        "geometry": {
+          "coordinates": [
+            -122.30707221302907,
+            47.654359841090866
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Shorline"
+        },
+        "geometry": {
+          "coordinates": [
+            -122.32790897891422,
+            47.7528946635131
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Seattle"
+        },
+        "geometry": {
+          "coordinates": [
+            -122.29821576615012,
+            47.70556211070851
+          ],
+          "type": "Point"
+        }
+      }
+    ]
+  }
+  

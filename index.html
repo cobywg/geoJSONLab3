@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Map of USA and memorable spots</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #container {
+        display: flex;
+        height: 100vh;
+        flex-direction: row;
+        align-items: stretch;
+      }
+
+      #side-panel {
+        flex-basis: 500px;
+        overflow-y: scroll;
+      }
+
+      #map {
+        flex-grow: 1;
+      }
+
+      button {
+        margin-bottom: 10px;
+      }
+
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 16px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+     @media (max-width: 1024px) {
+    #side-panel {
+      display: none;
+    }
+    }
+
+    </style>
+  </head>
+  <body>
+    <main id="container">
+      <div id="side-panel">
+
+        <h2>List of memorable places in Seattle</h2>
+
+        <table>
+          <tr>
+            <th>Places to visit</th>
+          </tr>
+        </table>
+
+      </div>
+      <div id="map"></div>
+    </main>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+
+      let map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        zoom: 4.1, // starting zoom
+        center: [-95, 38] // starting center
+      });
+
+      async function geojsonFetch() {
+        try {
+          let response = await fetch('assests/home.geojson');
+          let home = await response.json();
+          response = await fetch('assests/states.geojson');
+          let states = await response.json();
+          return { home, states };
+        } catch (error) {
+          console.error('Error fetching GeoJSON data:', error);
+        }
+      }
+
+      // Load data to the map as new layers and table on the side.
+      geojsonFetch().then(({ home, states }) => {
+        // Add home GeoJSON data
+        map.addSource('home', {
+          type: 'geojson',
+          data: home
+        });
+
+        map.addLayer({
+          'id': 'home-layer',
+          'type': 'circle',
+          'source': 'home',
+          'paint': {
+            'circle-radius': 8,
+            'circle-stroke-width': 2,
+            'circle-color': 'green', // Choose your desired color
+            'circle-stroke-color': 'white'
+          }
+        });
+
+        // Assuming the table is for 'home.geojson'
+        let table = document.getElementsByTagName("table")[0];
+        for (let i = 0; i < home.features.length; i++) {
+          let row = table.insertRow(-1);
+          let cell1 = row.insertCell(0);
+          cell1.innerHTML = home.features[i].properties.name; // Update property name if needed
+        }
+      });
+
+    </script>
+  </body>
+</html>
